@@ -2,7 +2,6 @@ import 'package:ecomerce_project/data/models/network_response.dart';
 import 'package:ecomerce_project/data/models/product_details_model.dart';
 import 'package:ecomerce_project/data/services/network_caller.dart';
 import 'package:get/get.dart';
-
 import '../../data/models/product_details.dart';
 import '../../data/utility/urls.dart';
 
@@ -11,22 +10,25 @@ class ProductDetailsController extends GetxController{
  ProductDetails _productDetails= ProductDetails();
  String _errorMessage='';
  List<String> _availableColors=[];
+ List<String> _availableSizes=[];
 
  bool get getProductDetailsInProgress => _getProductDetailsInProgress;
  ProductDetails get productDetails =>_productDetails;
  List<String> get availableColors => _availableColors;
+ List<String> get availableSizes => _availableSizes;
  String get errorMessage =>_errorMessage;
 
  Future<bool> getProductDetails(int id) async{
    _getProductDetailsInProgress=true;
    update();
    final NetworkResponse response=
-   await NetworkCaller().getRequest(Urls.getProductDetails(id));
+   await NetworkCaller.getRequest(Urls.getProductDetails(id));
    _getProductDetailsInProgress=false;
    if(response.isSuccess){
      _productDetails=
          ProductDetailsModel.fromJson(response.responseJson ?? {}).data!.first;
        _convertStringToColor(_productDetails.color ?? '');
+       _convertStringToSizes(_productDetails.size ?? '');
      update();
    return true;
    }else{
@@ -42,5 +44,8 @@ class ProductDetailsController extends GetxController{
        _availableColors.add(c);
      }
    }
+ }
+ void _convertStringToSizes(String sizes){
+   _availableSizes=sizes.split(',');
  }
 }

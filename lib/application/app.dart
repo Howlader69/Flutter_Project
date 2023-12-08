@@ -1,16 +1,22 @@
 import 'package:ecomerce_project/application/state_holder_binder.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
-
+import 'package:get/get_navigation/src/root/get_material_app.dart'; 
 import '../presentations/ui/screens/splashScreen.dart';
 import '../presentations/ui/utility/App_Colors.dart';
 
-class CraftBay extends StatelessWidget {
-  const CraftBay({super.key});
+class CraftBay extends StatefulWidget {
+  static GlobalKey<NavigatorState> globalKey=GlobalKey<NavigatorState>();
+  CraftBay({super.key});
 
+  @override
+  State<CraftBay> createState() => _CraftBayState();
+}
+
+class _CraftBayState extends State<CraftBay> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorKey: CraftBay.globalKey,
       home: const splashScreen(),
       theme: ThemeData(
         primarySwatch: MaterialColor(AppColors.primaryColor.value, AppColors().color),
