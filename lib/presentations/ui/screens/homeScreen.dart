@@ -113,6 +113,9 @@ class _homeScreenState extends State<homeScreen> {
                       itemBuilder: (context, index) {
                         return CategoryCard(
                             categoryData: categoryController.categoryModel.data![index],
+                          onTap: (){
+                            Get.to(ProductListScreen(categoryId: categoryController.categoryModel.data![index].id!));
+                          },
                         );
                       });
                 }),
@@ -122,7 +125,9 @@ class _homeScreenState extends State<homeScreen> {
               ),
               Sectionheader(
                 title: 'Popular',
-                onTap: () {},
+                onTap: () {
+                 // Get.to(const ProductListScreen());
+                },
               ),
               SizedBox(
                 height: 165,
@@ -152,7 +157,7 @@ class _homeScreenState extends State<homeScreen> {
               Sectionheader(
                 title: 'Special',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                 // Get.to(const ProductListScreen());
                 },
               ),
               SizedBox(
@@ -183,7 +188,7 @@ class _homeScreenState extends State<homeScreen> {
               Sectionheader(
                 title: 'New',
                 onTap: () {
-                  Get.to(const ProductListScreen());
+                //  Get.to(const ProductListScreen());
                 },
               ),
               SizedBox(

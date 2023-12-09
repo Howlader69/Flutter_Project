@@ -6,10 +6,10 @@ import '../../data/utility/urls.dart';
 
 class CategoryController extends GetxController {
   bool _getCategoriesInProgress = false;
-  CategoryModel _categoryModel = CategoryModel();
+  ProductModel _categoryModel = ProductModel();
   String _message = '';
 
-  CategoryModel get categoryModel => _categoryModel;
+  ProductModel get categoryModel => _categoryModel;
   bool get getCategoriesInProgress => _getCategoriesInProgress;
   String get message => _message;
   Future<bool> getCategories() async {
@@ -19,7 +19,7 @@ class CategoryController extends GetxController {
     await NetworkCaller.getRequest(Urls.getCategories);
     _getCategoriesInProgress = false;
     if (response.isSuccess) {
-      _categoryModel = CategoryModel.fromJson(response.responseJson ?? {});
+      _categoryModel = ProductModel.fromJson(response.responseJson ?? {});
       update();
       return true;
     } else {

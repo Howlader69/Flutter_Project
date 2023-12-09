@@ -1,6 +1,7 @@
 
 import 'package:ecomerce_project/presentations/state_holders/Category_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/main_bottom_nav_controller.dart';
+import 'package:ecomerce_project/presentations/ui/screens/Product_list_Screen.dart';
 import 'package:ecomerce_project/presentations/ui/widgets/categoryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,6 +51,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                       ),
                     );
                   }
+
                   return GridView.builder(
                     itemCount: categoryController.categoryModel.data?.length ?? 0,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -58,9 +60,14 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
                     mainAxisSpacing: 16
 
                   ), itemBuilder: (context,index){
-                    return  FittedBox(
-                        child: CategoryCard(categoryData: categoryController.categoryModel.data![index],)
-                    );
+                    return FittedBox(
+                        child: CategoryCard(
+                      categoryData:
+                          categoryController.categoryModel.data![index],
+                          onTap: (){
+                        Get.to(ProductListScreen(categoryId: categoryController.categoryModel.data![index].id!));
+                          },
+                    ));
                   });
                 }
               ),
