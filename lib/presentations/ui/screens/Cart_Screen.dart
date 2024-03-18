@@ -1,8 +1,6 @@
-import 'package:ecomerce_project/presentations/ui/widgets/Custom_Stepper.dart';
+import 'package:ecomerce_project/presentations/state_holders/cart_list_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../state_holders/main_bottom_nav_controller.dart';
 import '../utility/App_Colors.dart';
 import '../widgets/Cart_Product_Card.dart';
@@ -16,6 +14,13 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Get.find<CartListController>().getCartList();
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,59 +41,70 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-              child: ListView.builder(
-                  itemCount: 4,
-                  itemBuilder: (context,index){
-                return const CartProductCard();
-              })
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            decoration: BoxDecoration(
-                color: AppColors.primaryColor.withOpacity(0.1),
-                borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(16),
-                    topRight: Radius.circular(16))),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+      body: GetBuilder<CartListController>(
+        builder:(cartListController){
+          if(cartListController.getCartListInProgress){
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+        }
+          return Column(
+            children: [
+              Expanded(
+                  child: ListView.builder(
+                      itemCount: cartListController.cartListModel.data?.length ??  0,
+                      itemBuilder: (context,index){
+                    return  CartProductCard(
+                      cartData: cartListController.cartListModel.data![index],
+                    );
+                  })
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryColor.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
+                        topLeft: Radius.circular(16),
+                        topRight: Radius.circular(16))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Total Price',
-                      style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Total Price',
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black),
+                        ),
+                        const SizedBox(
+                          height: 4,
+                        ),
+                        Text(
+                          '\$${cartListController.totalPrice}',
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 16,
+                              color: AppColors.primaryColor),
+                        )
+                      ],
                     ),
                     SizedBox(
-                      height: 4,
-                    ),
-                    Text(
-                      '\$1000',
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 16,
-                          color: AppColors.primaryColor),
+                      width: 120,
+                      child: ElevatedButton(
+                          onPressed: () {
+                            Get.to(const CreateReviewsScreen());
+                          },
+                          child: const Text('Checkout')),
                     )
                   ],
                 ),
-                SizedBox(
-                  width: 120,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        Get.to(const CreateReviewsScreen());
-                      },
-                      child: const Text('Checkout')),
-                )
-              ],
-            ),
-          ),
-        ],
+              ),
+            ],
+          );
+        }
       ),
     );
   }

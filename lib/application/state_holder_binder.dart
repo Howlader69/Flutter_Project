@@ -1,3 +1,4 @@
+import 'package:ecomerce_project/data/models/cart_list_model.dart';
 import 'package:ecomerce_project/presentations/state_holders/Category_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/ProductList_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/Product_details_controller.dart';
@@ -24,5 +25,6 @@ class StateholderBinder extends Bindings{
     Get.put(ProductDetailsController());
     Get.put(AddToCartController());
     Get.put(ProductListController());
+    Get.put(CartListModel());
   }
 }

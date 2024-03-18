@@ -1,12 +1,17 @@
+import 'package:ecomerce_project/presentations/state_holders/cart_list_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../../data/models/cart_list_model.dart';
 import '../utility/App_Colors.dart';
 import 'Custom_Stepper.dart';
 
 class CartProductCard extends StatelessWidget {
+  final CartData cartData;
   const CartProductCard({
-    super.key,
+    super.key, required this.cartData,
   });
 
   @override
@@ -22,11 +27,10 @@ class CartProductCard extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            decoration: const BoxDecoration(
+            decoration:  BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                    image: NetworkImage(
-                        'https://static.nike.com/a/images/t_default/6c350499-1796-4393-a50f-11ee2ffc154e/custom-nike-dunk-low-by-you-shoes.png'))),
+                    image: NetworkImage('${cartData.size}'))),
           ),
           const SizedBox(
             width: 8,
@@ -44,20 +48,20 @@ class CartProductCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Text(
-                            'Bata New shoe hkjoo',
-                            style: TextStyle(fontSize: 18, color: Colors.black),
+                           Text(
+                            cartData.product?.title ?? '',
+                            style: const TextStyle(fontSize: 18, color: Colors.black),
                           ),
                           RichText(
-                              text: const TextSpan(
-                                  style: TextStyle(color: Colors.black54),
+                              text:  TextSpan(
+                                  style: const TextStyle(color: Colors.black54),
                                   children: [
                                 TextSpan(
-                                  text: 'Color:Black',
-                                  style: TextStyle(
+                                  text: 'Color:${cartData.color ?? ''}',
+                                  style: const TextStyle(
                                       fontSize: 12, color: Colors.black54),
                                 ),
-                                TextSpan(text: 'Size:Xl'),
+                                 TextSpan(text: 'Size:${cartData.product?.image ?? ''}'),
                               ]))
                         ],
                       ),
@@ -70,8 +74,8 @@ class CartProductCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text(
-                      '\$100',
+                    Text(
+                      '\$${cartData.product?.price ?? ''}',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -84,8 +88,10 @@ class CartProductCard extends StatelessWidget {
                             lowerLimit: 1,
                             upperLimit: 10,
                             stepValue: 1,
-                            value: 1,
-                            onChange: (int value) {}),
+                            value: cartData.numberofItem,
+                            onChange: (int value) {
+                              Get.find<CartListController>().changeItem(cartData.id!, value);
+                            }),
                       ),
                     )
                   ],
