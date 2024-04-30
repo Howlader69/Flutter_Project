@@ -1,7 +1,3 @@
-
-
-import 'package:ecomerce_project/data/models/product.dart';
-
 class CartListModel {
   String? msg;
   List<CartData>? data;
@@ -13,14 +9,14 @@ class CartListModel {
     if (json['data'] != null) {
       data = <CartData>[];
       json['data'].forEach((v) {
-        data!.add(CartData.fromJson(v));
+        data!.add(new CartData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['msg'] = msg;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['msg'] = this.msg;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
@@ -36,9 +32,8 @@ class CartData {
   String? size;
   String? createdAt;
   String? updatedAt;
-  Product? product;
+  Null? product;
   int? quantity;
-  int numberofItem=1;
 
   CartData(
       {this.id,
@@ -48,7 +43,6 @@ class CartData {
         this.size,
         this.createdAt,
         this.updatedAt,
-        this.quantity,
         this.product});
 
   CartData.fromJson(Map<String, dynamic> json) {
@@ -59,23 +53,19 @@ class CartData {
     size = json['size'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    quantity = int.tryParse(json['qty'] ?? 1);
-    product =
-    json['product'] != null ? Product.fromJson(json['product']) : null;
+    product = json['product'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['email'] = email;
-    data['product_id'] = productId;
-    data['color'] = color;
-    data['size'] = size;
-    data['created_at'] = createdAt;
-    data['updated_at'] = updatedAt;
-    if (product != null) {
-      data['product'] = product!.toJson();
-    }
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['email'] = this.email;
+    data['product_id'] = this.productId;
+    data['color'] = this.color;
+    data['size'] = this.size;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    data['product'] = this.product;
     return data;
   }
 }

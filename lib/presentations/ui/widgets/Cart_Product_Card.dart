@@ -1,8 +1,6 @@
 import 'package:ecomerce_project/presentations/state_holders/cart_list_controller.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 
 import '../../../data/models/cart_list_model.dart';
 import '../utility/App_Colors.dart';
@@ -30,7 +28,7 @@ class CartProductCard extends StatelessWidget {
             decoration:  BoxDecoration(
                 color: Colors.white,
                 image: DecorationImage(
-                    image: NetworkImage('${cartData.size}'))),
+                    image: NetworkImage(cartData.product?.image ?? ''))),
           ),
           const SizedBox(
             width: 8,
@@ -48,20 +46,20 @@ class CartProductCard extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                           Text(
+                          Text(
                             cartData.product?.title ?? '',
-                            style: const TextStyle(fontSize: 18, color: Colors.black),
+                            style: TextStyle(fontSize: 18, color: Colors.black),
                           ),
                           RichText(
                               text:  TextSpan(
-                                  style: const TextStyle(color: Colors.black54),
+                                  style: TextStyle(color: Colors.black54),
                                   children: [
                                 TextSpan(
                                   text: 'Color:${cartData.color ?? ''}',
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                       fontSize: 12, color: Colors.black54),
                                 ),
-                                 TextSpan(text: 'Size:${cartData.product?.image ?? ''}'),
+                                TextSpan(text: 'Size:${cartData.size}'),
                               ]))
                         ],
                       ),
@@ -74,7 +72,7 @@ class CartProductCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
+                     Text(
                       '\$${cartData.product?.price ?? ''}',
                       style: TextStyle(
                           fontSize: 18,
@@ -88,7 +86,7 @@ class CartProductCard extends StatelessWidget {
                             lowerLimit: 1,
                             upperLimit: 10,
                             stepValue: 1,
-                            value: cartData.numberofItem,
+                            value: cartData.quantity ?? 1,
                             onChange: (int value) {
                               Get.find<CartListController>().changeItem(cartData.id!, value);
                             }),
@@ -104,3 +102,5 @@ class CartProductCard extends StatelessWidget {
     );
   }
 }
+
+

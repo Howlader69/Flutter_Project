@@ -3,6 +3,7 @@ import 'package:ecomerce_project/presentations/state_holders/Category_controller
 import 'package:ecomerce_project/presentations/state_holders/ProductList_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/Product_details_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/add_to_cart_controller.dart';
+import 'package:ecomerce_project/presentations/state_holders/cart_list_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/email_verification_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/home_sliders_controller.dart';
 import 'package:ecomerce_project/presentations/state_holders/new_product_controller.dart';
@@ -25,6 +26,6 @@ class StateholderBinder extends Bindings{
     Get.put(ProductDetailsController());
     Get.put(AddToCartController());
     Get.put(ProductListController());
-    Get.put(CartListModel());
+    Get.put(CartListController());
   }
 }

@@ -1,4 +1,3 @@
-import 'package:ecomerce_project/presentations/ui/screens/auth/Complete_Profile_screen.dart';
 import 'package:ecomerce_project/presentations/ui/screens/main_bottom_nav_screen.dart';
 import 'package:ecomerce_project/presentations/ui/utility/App_Colors.dart';
 import 'package:flutter/material.dart';

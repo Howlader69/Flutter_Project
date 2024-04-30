@@ -1,6 +1,4 @@
-
 import 'package:get/get.dart';
-
 import '../../data/models/cart_list_model.dart';
 import '../../data/models/network_response.dart';
 import '../../data/services/network_caller.dart';
@@ -26,7 +24,7 @@ class CartListController extends GetxController {
 
     if (response.isSuccess) {
       _cartListModel=CartListModel.fromJson(response.responseJson!);
-      _calculateTotalPrice();
+    //  _calculateTotalPrice();
       update();
       return true;
     } else {
@@ -35,7 +33,7 @@ class CartListController extends GetxController {
     }
   }
  void changeItem(int cartId, int noOfItems) {
-    _cartListModel.data?.firstWhere((cartData) => cartData.id == cartId).quantity = noOfItems;
+    _cartListModel.data?.firstWhere((e) => e.id == cartId).quantity = noOfItems;
     _calculateTotalPrice();
   }
 
